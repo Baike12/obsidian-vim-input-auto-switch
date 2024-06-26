@@ -13,4 +13,5 @@
 # 最后再次分别向obsidian-latex-suite作者artisticat1、obsidian-vim-im-select作者alonelur两位大佬致敬
 如果可以的话给我点个star哦，~.~爱你
 或者可以请我喝杯茶，谢谢啦
+
 ![image](https://github.com/Baike12/obsidian-vim-input-auto-switch/assets/134204678/74a2e14c-14ce-412a-bff7-80b249fb4de7)
