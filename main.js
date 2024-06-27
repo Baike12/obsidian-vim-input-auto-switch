@@ -7472,7 +7472,7 @@ function effect2(_ref2) {
   }
   if (true) {
     if (!isHTMLElement(arrowElement)) {
-      console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
+    console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
     }
   }
   if (!contains(state.elements.popper, arrowElement)) {
@@ -13659,6 +13659,7 @@ function expandSnippets(view) {
   markTabstops(view, tabstopsToAdd);
   expandTabstops(view, tabstopsToAdd);
   clearSnippetQueue(view);
+  switchEnglish();
   return true;
 }
 function handleUndoKeypresses(view, snippets2) {
@@ -15253,6 +15254,7 @@ var handleKeydown = (key, shiftKey, ctrlKey, isIME, view) => {
     if (!ctrlKey) {
       try {
         success = runSnippets(view, ctx, key);
+        // switchEnglish();
         if (success)
           return true;
       } catch (e) {
@@ -15309,13 +15311,36 @@ var optionalExtensions = {
   "mathPreview": [cursorTooltipField.extension, cursorTooltipBaseTheme, (0, import_view12.tooltips)({ position: "absolute" })]
 };
 
+let curIM = "1033";
+function switchEnglish() {
+  if (curIM == "1033"){
+    return;
+  }
+  const { exec } = require("child_process");
+  exec("D:\\Note\\im-select.exe 1033", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`switch to english error: ${error}`);
+      return;
+    }
+  });
+  curIM = "1033";
+}
+// function switchChinese() {
+//     const { exec } = require("child_process");
+//     exec("D:\\Note\\im-select.exe 2052", (error, stdout, stderr) => {
+//       if (error) {
+//         console.error(`switch to chinese error: ${error}`);
+//         return;
+//       }
+//     });
+//     curIM = "2052";
+// }
 // src/main.ts
 var LatexSuitePlugin = class extends import_obsidian8.Plugin {
   constructor() {
     super(...arguments);
     this.editorExtensions = [];
     this.previousMode = "insert";
-    this.curIM = "1033";
   }
   onload() {
     this.app.workspace.on("file-open", async (_file) => {
@@ -15357,7 +15382,7 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
         return;
       }
     });
-    this.curIM = "1033";
+    curIM = "1033";
     this.previousMode = "insert";
   }
   switchChinese() {
@@ -15369,22 +15394,19 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
       }
     });
     this.previousMode = "normal";
-    this.curIM = "2052";
+    curIM = "2052";
   }
   onVimModeChanged(modeObj) {
     switch (modeObj.mode) {
       case "insert":
-        if (this.curIM !== "2052"){
+        if (curIM !== "2052"){
           if (!isInMath){
             this.switchChinese();
           }
         }
         break;
       default:
-        // if (this.previousMode != "insert") {
-          // break;
-        // }
-        if (this.curIM !== "1033"){
+        if (curIM !== "1033"){
           this.switchEnglish();
         }
         break;
