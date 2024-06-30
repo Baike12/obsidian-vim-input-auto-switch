@@ -15254,7 +15254,6 @@ var handleKeydown = (key, shiftKey, ctrlKey, isIME, view) => {
     if (!ctrlKey) {
       try {
         success = runSnippets(view, ctx, key);
-        // switchEnglish();
         if (success)
           return true;
       } catch (e) {
@@ -15341,6 +15340,7 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
     super(...arguments);
     this.editorExtensions = [];
     this.previousMode = "insert";
+    this.isAltPressed = false;
   }
   onload() {
     this.app.workspace.on("file-open", async (_file) => {
@@ -15348,11 +15348,29 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
       if (view) {
         const editor = this.getCodeMirror(view);
         if (editor) {
-          editor.on("vim-mode-change", (modeObj) => {
-            if (modeObj) {
-              this.onVimModeChanged(modeObj);
+        editor.on("vim-mode-change", (modeObj) => {
+          if (modeObj) {
+            this.onVimModeChanged(modeObj);
+          }
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === 'Alt') {
+            this.isAltPressed = true;
+          }
+        }, true); 
+        document.addEventListener("keyup", (event) => {/* 当按下alt之后再按其他键m会被认为是再按下了一次alt，但是能检测到m弹起 */
+          if (event.key === 'm') {
+            if (this.isAltPressed){
+              switchEnglish();
             }
-          });
+          }
+        }, true);
+        document.addEventListener("keyup", (event) => {
+          if (event.key === 'Alt') {
+            this.isAltPressed = false;
+          }
+        }, true); 
         }
       }
     })
@@ -15397,6 +15415,7 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
     curIM = "2052";
   }
   onVimModeChanged(modeObj) {
+    // console.error("im change")
     switch (modeObj.mode) {
       case "insert":
         if (curIM !== "2052"){

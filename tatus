@@ -1,0 +1,47 @@
+[33mcommit 1cc3bd02fe4814fe6883840ae29921bbc62f999e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: baike <a736513759b@gmailcom>
+Date:   Thu Jun 27 12:24:29 2024 +0800
+
+    [fix]:0002--auto switch when get in math block
+
+[33mcommit c8196d2a959a256dbf2d2259a3ae5017fd1f66a2[m
+Author: baike <134204678+Baike12@users.noreply.github.com>
+Date:   Wed Jun 26 23:02:42 2024 +0800
+
+    Update README.md
+
+[33mcommit 6b5e583df6a5ef7c086b8928bf88d1c9c235fc02[m
+Author: Baike12 <134204678+Baike12@users.noreply.github.com>
+Date:   Wed Jun 26 21:39:14 2024 +0800
+
+    Update README.md
+
+[33mcommit 124f552240524a703371bb5315d90785398f76f4[m
+Author: Baike12 <134204678+Baike12@users.noreply.github.com>
+Date:   Wed Jun 26 21:36:53 2024 +0800
+
+    Update README.md
+
+[33mcommit cc8c2c9d5797c7d7e08eda748d71d05947fd0d8c[m
+Author: Baike12 <134204678+Baike12@users.noreply.github.com>
+Date:   Wed Jun 26 21:36:12 2024 +0800
+
+    Update README.md
+
+[33mcommit 2e11ff5217afc4a739e7e40f8e302a01e9585ea4[m
+Author: Baike12 <134204678+Baike12@users.noreply.github.com>
+Date:   Wed Jun 26 21:35:52 2024 +0800
+
+    Update README.md
+
+[33mcommit 071b5787a1495dd16b01c7c6b820654947df3c50[m
+Author: Baike12 <134204678+Baike12@users.noreply.github.com>
+Date:   Wed Jun 26 21:14:16 2024 +0800
+
+    Create README.md
+
+[33mcommit d0e56b458e18cb7080b136d1157b3af4fba24fc5[m
+Author: baike <a736513759b@gmailcom>
+Date:   Wed Jun 26 21:03:23 2024 +0800
+
+    [feature]:0001--code migration
