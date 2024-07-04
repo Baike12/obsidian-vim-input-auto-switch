@@ -14007,7 +14007,7 @@ var shouldTaboutByCloseBracket = (view, keyPressed) => {
 };
 
 // src/features/matrix_shortcuts.ts
-var runMatrixShortcuts = (view, ctx, key, shiftKey) => {
+var runmatrixshortcuts = (view, ctx, key, shiftKey) => {
   const settings = getLatexSuiteConfig(view);
   let isInsideAnEnv = false;
   for (const envName of settings.matrixShortcutsEnvNames) {
@@ -14031,7 +14031,10 @@ var runMatrixShortcuts = (view, ctx, key, shiftKey) => {
       view.dispatch(view.state.replaceSelection(" \\\\\n"));
     }
     return true;
-  } else {
+  } else if(key == "="){
+    view.dispatch(view.state.replaceSelection(" &= "));
+    return true;
+  }else {
     return false;
   }
 };
@@ -15276,8 +15279,8 @@ var handleKeydown = (key, shiftKey, ctrlKey, isIME, view) => {
     }
   }
   if (settings.matrixShortcutsEnabled && ctx.mode.blockMath) {
-    if (["Tab", "Enter"].contains(key)) {
-      success = runMatrixShortcuts(view, ctx, key, shiftKey);
+    if (["Tab", "Enter", "="].contains(key)) {
+      success = runmatrixshortcuts(view, ctx, key, shiftKey);
       if (success)
         return true;
     }
@@ -15343,6 +15346,9 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
     this.isAltPressed = false;
   }
   onload() {
+    window.addEventListener("blur", () => {
+      this.isAltPressed = false;
+    });
     this.app.workspace.on("file-open", async (_file) => {
       const view = this.getActiveView();
       if (view) {
@@ -15355,23 +15361,30 @@ var LatexSuitePlugin = class extends import_obsidian8.Plugin {
         });
 
         document.addEventListener("keydown", (event) => {
+          // console.error("event:",event);
+          // console.error("in keydown isAltPressed:", this.isAltPressed);
           if (event.key === 'Alt') {
             this.isAltPressed = true;
           }
         }, true); 
-        document.addEventListener("keyup", (event) => {/* 当按下alt之后再按其他键m会被认为是再按下了一次alt，但是能检测到m弹起 */
-          if (event.key === 'm') {
-            if (this.isAltPressed){
-              switchEnglish();
-            }
-          }
-        }, true);
         document.addEventListener("keyup", (event) => {
+          // console.error("event:",event);
+          // console.error("in keyup isAltPressed:", this.isAltPressed);
           if (event.key === 'Alt') {
             this.isAltPressed = false;
           }
         }, true); 
-        }
+        document.addEventListener("keyup", (event) => {/* 当按下alt之后再按其他键m会被认为是再按下了一次alt，但是能检测到m弹起 */
+          // console.error("event:",event);
+          // console.error("in keyup isAltPressed:", this.isAltPressed);
+          if (this.isAltPressed){
+            if (event.key === 'm') {
+              switchEnglish();
+              this.isAltPressed = false;
+            }
+          }
+        }, true);
+       }
       }
     })
     return __async(this, null, function* () {
